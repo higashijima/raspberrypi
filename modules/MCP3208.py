@@ -1,6 +1,5 @@
 import RPi.GPIO as GPIO
 import time
-import math
 
 SPI_CLK = 11
 SPI_MOSI = 10
@@ -53,28 +52,4 @@ def MCP3208(ch, clk=SPI_CLK, mosi=SPI_MOSI, miso=SPI_MISO, cs=SPI_SS):
   GPIO.output(CS, CS_OUT) # CLK out
 
   return value
-
-def digtalOut(ch):
-  GPIO.setmode(GPIO.BCM)
-  GPIO.setup(SPI_CLK, GPIO.OUT)
-  GPIO.setup(SPI_MOSI, GPIO.OUT)
-  GPIO.setup(SPI_MISO, GPIO.IN)
-  GPIO.setup(SPI_SS, GPIO.OUT)
-  GPIO.setup(18, GPIO.OUT)
-  dist = MCP3208(ch)
-  print('{}:{}({} cm)'.format(ch, dist, dist*20/4096))
-  time.sleep(1)
-  if(dist > 2048):
-    GPIO.output(18, GPIO.HIGH)
-  else:
-    GPIO.output(18, GPIO.LOW) 
-
-def main():
-  GPIO.cleanup()
-  while True:
-    for i in range(1):
-      digtalOut(i)
-
-if __name__=='__main__':
-  main()
 
